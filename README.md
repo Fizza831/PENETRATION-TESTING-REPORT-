@@ -173,9 +173,28 @@ I also learned the importance of accurate technical reporting. A good cybersecur
 Finally, these practical exercises reinforced the importance of conducting cybersecurity testing within an appropriate and authorized scope.
 
 # 8. Evidences Collected
-
 Screenshots and supporting files collected during the practical activities are organized in the repository.
 
+### WHOIS Lookup
+![WHOIS Output](02_Screenshots/02-whois-networkwalks.png)
+
+### WhatWeb Fingerprinting
+![WhatWeb Output](02_Screenshots/Screenshot11-whatweb-fingerprint.png)
+
+### Nslookup DNS Enumeration
+![Nslookup Output](02_Screenshots/03-nslookup-dns.png)
+
+### cURL HTTP Headers
+![cURL Output](02_Screenshots/Screenshot%2012-curl-http-headers.png)
+
+### WAF Detection
+![WAFW00F Output](02_Screenshots/13-wafw00f-version.png)
+
+### Zenmap Ping Scan
+![Zenmap Ping Scan](02_Screenshots/17-zenmap-ping-scan.png)
+
+### Zenmap Network Topology
+![Zenmap Topology](03_Zenmap_Files/sstopology.png)
 The evidence includes:
 
 **Footprinting & Reconnaissance — W2-PM1**
