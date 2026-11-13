@@ -1,0 +1,290 @@
+WEEK 2 CYBERSECURITY INTERNSHIP — COMMANDS AND RESULTS Date: 13 November
+2026
+
+SELECTED MODULES - W2-PM1: Footprinting with Multiple Kali Linux Tools -
+W2-PM5: Network Scanning with Zenmap - W2-PM-FINAL: Detailed Report
+
+SCOPE NOTE External-domain observations below were collected using
+commands actually run against networkwalks.com. Active testing was not
+performed where authorization was not confirmed. Local cURL, DNSRecon,
+and Zenmap activities are clearly labelled as local lab demonstrations.
+Do not describe local results as scans of networkwalks.com.
+
+============================================================ PM1 —
+FOOTPRINTING WITH MULTIPLE TOOLS
+============================================================
+
+TASK 1 — WHOIS Command: whois networkwalks.com
+
+Observed results: - Domain: NETWORKWALKS.COM - Registry ID:
+2452319255_DOMAIN_COM-VRSN - Registrar: GoDaddy.com, LLC - Registrar
+WHOIS server: whois.godaddy.com - Created: 2019-11-06T22:51:46Z -
+Updated: 2025-11-12 - Expiry: 2027-11-06 - Statuses:
+clientDeleteProhibited, clientRenewProhibited, clientTransferProhibited,
+clientUpdateProhibited - DNSSEC: unsigned - Registry name servers:
+NS6135.HOSTGATOR.COM, NS6136.HOSTGATOR.COM - Registrar record also
+showed NS29.DOMAINCONTROL.COM and NS30.DOMAINCONTROL.COM -
+Registrant/technical details protected by Domains By Proxy, LLC /
+Registration Private. - Query time: 2026-11-11 19:14 UTC.
+
+TASK 2 — WHATWEB Command: whatweb networkwalks.com
+
+Actual output: http://networkwalks.com [301 Moved Permanently] Apache,
+Cookies[__wpdm_client], Country[UNITED STATES][US], HTTPServer[Apache],
+HttpOnly[__wpdm_client], IP[192.232.216.135],
+RedirectLocation[https://networkwalks.com/],
+UncommonHeaders[permissions-policy,x-redirect-by,referrer-policy,x-endurance-cache-level,x-nginx-cache]
+https://networkwalks.com [200 OK] Apache, Bootstrap[7.1.4],
+Cookies[__wpdm_client], Country[UNITED STATES][US],
+Email[info@networkwalks.com], Frame, Google-Tag-Manager, HTML5,
+HTTPServer[Apache], HttpOnly[__wpdm_client], IP[192.232.216.135],
+JQuery[3.7.1], MetaGenerator[WordPress 7.1.4,WordPress Download Manager
+3.3.76], Open-Graph-Protocol[website],
+Script[4684NR-IPIB&pidnVar2=50511&prtVar2=7&scvVar2=12,application/json,application/ld+json,module,speculationrules,text/javascript],
+Title[Networkwalks Academy],
+UncommonHeaders[permissions-policy,link,referrer-policy,x-endurance-cache-level,x-nginx-cache],
+WordPress[7.1.4] https://networkwalks.com/ [200 OK] Apache,
+Bootstrap[7.1.4], Cookies[__wpdm_client], Country[UNITED STATES][US],
+Email[info@networkwalks.com], Frame, Google-Tag-Manager, HTML5,
+HTTPServer[Apache], IP[192.232.216.135], JQuery[3.7.1],
+MetaGenerator[WordPress 7.1.4,WordPress Download Manager 3.3.76],
+Open-Graph-Protocol[website],
+Script[4684NR-IPIB&pidnVar2=50511&prtVar2=7&scvVar2=12&scvVar2=12,application/json,application/ld+json,module,speculationrules,text/javascript],
+Title[Networkwalks Academy],
+UncommonHeaders[permissions-policy,link,referrer-policy,x-endurance-cache-level,x-nginx-cache],
+WordPress[7.1.4]
+
+TASK 3 — NSLOOKUP Command: nslookup networkwalks.com
+
+Observed: - Resolver: 8.8.8.8 - Address: 192.232.216.135 - Response:
+Non-authoritative answer.
+
+Command: nslookup -type=NS networkwalks.com
+
+Name servers: - ns6136.hostgator.com - ns6135.hostgator.com
+
+SUPPORTING DNS QUERIES — DIG Command: dig networkwalks.com A Observed:
+NOERROR; A = 192.232.216.135; TTL = 12781; query time = 68 ms; resolver
+= 8.8.8.8.
+
+Command: dig networkwalks.com MX Observed: MX = 0 mail.networkwalks.com;
+TTL = 12691; query time = 68 ms.
+
+Command: dig networkwalks.com TXT Observed: SPF = v=spf1 +a +mx
++ip4:50.87.144.87 +include:websitewelcome.com ~all. A Google
+site-verification token was also returned and is intentionally omitted.
+TTL = 14400; query time = 396 ms.
+
+Command: dig networkwalks.com SOA Observed: primary name server =
+ns6135.hostgator.com; responsible mailbox field =
+root.gator3068.hostgator.com; serial = 2026111200; refresh = 86400
+seconds; retry = 7200 seconds; expire = 3600000 seconds; minimum = 86400
+seconds; query time = 372 ms.
+
+Command: dig networkwalks.com AAAA Observed: NOERROR; no AAAA answer
+returned; authority SOA returned; query time = 84 ms. This does not mean
+the website is unavailable.
+
+Command: dig +trace networkwalks.com Observed: trace followed root DNS,
+.com TLD, and delegated name servers ns6135.hostgator.com and
+ns6136.hostgator.com. Final authoritative response came from
+ns6136.hostgator.com (192.232.216.131), with A record 192.232.216.135.
+Response time = 256 ms.
+
+Command: dig networkwalks.com CAA Observed: NOERROR; no CAA answer
+returned; authority SOA returned; query time = 364 ms.
+
+TASK 4 — cURL HTTP HEADERS (LOCAL DEMONSTRATION ONLY) Initial command:
+curl -I http://127.0.0.1
+
+Output: curl: (7) Failed to connect to 127.0.0.1 port 80 after 0 ms:
+Could not connect to server
+
+A temporary local server was started: python3 -m http.server 8000
+
+Command: curl -I http://127.0.0.1:8000
+
+Actual output: HTTP/1.0 200 OK Server: SimpleHTTP/0.6 Python/3.14.7
+Date: Thu, 12 Nov 2026 21:44:59 GMT Content-type: text/html;
+charset=utf-8 Content-Length: 2569
+
+This was a local Kali test, not a cURL request to networkwalks.com.
+
+TASK 5 — WEB APPLICATION FIREWALL DETECTION USING WAFW00F
+
+Objective: Identify whether the target website is protected by a Web
+Application Firewall (WAF).
+
+Tool: WAFW00F v2.4.2
+
+Command executed:
+wafw00f networkwalks.com
+
+Actual output:
+[*] Checking https://networkwalks.com
+[+] The site https://networkwalks.com is behind ModSecurity (SpiderLabs) WAF.
+[~] Number of requests: 2
+
+Observation:
+WAFW00F identified ModSecurity (SpiderLabs) as the WAF protecting
+https://networkwalks.com. The tool made 2 requests during the detection
+process.
+
+Conclusion:
+The WAF detection command completed and reported ModSecurity (SpiderLabs).
+This is a tool-detection result only; it does not establish that the
+website has a vulnerability or that the WAF can be bypassed. The test was
+performed as an observed practical result; do not conduct further active
+testing against this third-party website without the owner's permission.
+
+Evidence screenshot: 13-wafw00f-version.png
+
+TASK 6 — DNSRECON LOCAL LAB DEMONSTRATION Version command: dnsrecon
+–version
+
+Observed: 2026-11-12T17:18:25.296856-0500 INFO DNSRecon version 1.6.0
+https://www.darkoperator.com
+
+Local DNS configuration file: /etc/dnsmasq.d/week2-lab.conf
+Configuration: no-resolv no-hosts listen-address=127.0.0.1
+bind-interfaces address=/lab.test/127.0.0.1
+
+Validation command: sudo dnsmasq –test Output: dnsmasq: syntax check OK.
+
+Local DNS server command: sudo dnsmasq –no-daemon –conf-file=/dev/null
+–conf-dir=/etc/dnsmasq.d
+
+Startup output: dnsmasq: started, version 2.93 cachesize 150 dnsmasq:
+compile time options: IPv6 GNU-getopt DBus no-UBus i18n IDN2 DHCP DHCPv6
+no-Lua TFTP conntrack ipset nftset auth DNSSEC loop-detect inotify
+dumpfile dnsmasq: warning: no upstream servers configured dnsmasq:
+cleared cache
+
+Local DNS test: nslookup -type=A lab.test 127.0.0.1
+
+Successful output: Server: 127.0.0.1 Address: 127.0.0.1#53 Name:
+lab.test Address: 127.0.0.1 Name: lab.test Address: 127.0.0.1
+
+DNSRecon command: dnsrecon -d lab.test -n 127.0.0.1 -t std
+
+Actual output: 2026-11-13T08:25:30.879034-0500 INFO Starting enumeration
+for domain: lab.test 2026-11-13T08:25:30.879423-0500 INFO std:
+Performing General Enumeration against: lab.test…
+2026-11-13T08:25:30.888550-0500 ERROR All nameservers failed to answer
+the DNSSEC query for lab.test 2026-11-13T08:25:30.893200-0500 INFO A
+lab.test 127.0.0.1 2026-11-13T08:25:30.897172-0500 INFO Enumerating SRV
+Records 2026-11-13T08:25:30.945199-0500 ERROR No SRV Records Found for
+lab.test 2026-11-13T08:25:30.945592-0500 INFO Completed enumeration for
+domain: lab.test
+
+This was a local lab demonstration, not enumeration of networkwalks.com.
+An earlier attempt returned connection refused because the local DNS
+server was not running; it succeeded after dnsmasq was started.
+
+============================================================ PM5 —
+NETWORK SCANNING WITH ZENMAP
+============================================================
+
+TASK 1 — OPEN ZENMAP Zenmap was launched using: sudo zenmap
+
+TASK 2 — IDENTIFY LOCAL IP AND SUBNET Command: ip -4 addr
+
+Relevant output: 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500
+qdisc fq_codel state UP group default qlen 1000 inet 10.0.0.2/24 brd
+10.0.0.255 scope global noprefixroute eth0
+
+Observed: - Interface: eth0 - IPv4: 10.0.0.2 - Subnet: 10.0.0.0/24 -
+Broadcast: 10.0.0.255
+
+TASK 3 — ZENMAP QUICK SCAN OF LOCALHOST Target: 127.0.0.1 Profile: Quick
+scan
+
+Observed: - Host status: Up - 100 TCP ports scanned - 1 open port - 99
+closed ports - 0 filtered ports - Open port: 53/tcp - Service: domain
+(DNS) - Scan duration: approximately 0.12 seconds
+
+TASK 4 — PING SCAN / LIVE HOST DISCOVERY Target: 10.0.0.0/24 Profile:
+Ping scan
+
+Observed: - 256 IP addresses scanned - 3 hosts reported up - Scan
+duration: approximately 3.03 seconds - 10.0.0.1 — Up - 10.0.0.2 — Up
+(local Kali machine) - 10.0.0.3 — Up
+
+TASK 5 — HOST DETAILS AND TOPOLOGY Zenmap Ports/Hosts and Host Details
+screenshots were captured. The topology view showed the local Kali
+machine (10.0.0.2) at the center, with the discovered hosts arranged
+around it.
+
+Topology PDF saved as: /home/kali/Week2_Topology.pdf
+
+Zenmap scan XML saved as: /home/kali/Week2_Zenmap_Scan.xml
+
+TASK 6 — MAC ADDRESS INVESTIGATION Command: ip link show eth0
+
+Actual output: 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc
+fq_codel state UP mode DEFAULT group default qlen 1000 link/ether
+08:00:27:c3:fb:76 brd ff:ff:ff:ff:ff:ff
+
+Kali interface MAC: 08:00:27:c3:fb:76
+
+ARP scan command: sudo arp-scan –interface=eth0 –localnet
+
+Actual output: Interface: eth0, type: EN10MB, MAC: 08:00:27:c3:fb:76,
+IPv4: 10.0.0.2 WARNING: Cannot open MAC/Vendor file ieee-oui.txt:
+Permission denied WARNING: Cannot open MAC/Vendor file mac-vendor.txt:
+Permission denied Starting arp-scan 1.10.0 with 256 hosts
+(https://github.com/royhills/arp-scan) 10.0.0.1 52:54:00:12:35:00
+(Unknown: locally administered) 10.0.0.2 52:54:00:12:35:00 (Unknown:
+locally administered) 10.0.0.2 52:54:00:12:35:00 (Unknown: locally
+administered) (DUP: 2) 10.0.0.3 08:00:27:11:d3:96 (Unknown) 4 packets
+received by filter, 0 packets dropped by kernel Ending arp-scan 1.10.0:
+256 hosts scanned in 1.985 seconds (128.97 hosts/sec). 3 responded
+
+MAC observations: - 10.0.0.1: 52:54:00:12:35:00 - 10.0.0.2:
+52:54:00:12:35:00 (duplicate/conflicting ARP response) - 10.0.0.3:
+08:00:27:11:d3:96 - Kali eth0 interface MAC independently shown by ip
+link: 08:00:27:c3:fb:76 - Zenmap Host Details displayed MAC as
+unavailable for 10.0.0.2. The discrepancy was documented rather than
+silently replacing one result with another. arp-scan vendor-file
+permission warnings did not prevent the scan from returning IP/MAC
+responses.
+
+============================================================ EVIDENCE
+FILES — VERIFY BEFORE SUBMISSION
+============================================================
+
+Suggested screenshot names: 02-whois-networkwalks.png
+03-nslookup-dns.png 04-dig-a-record.png 05-dig-mx-record.png
+06-dig-txt-records.png 07-dig-soa-record.png 08-dig-aaaa-record.png
+09-dig-trace.png 10-dig-caa-record.png 11-whatweb-fingerprint.png
+12-curl-http-headers.png 13-wafw00f-version.png 14-dnsrecon-lab.png
+15-zenmap-quick-scan.png 15-zenmap-quick-scan-ports.png
+16-zenmap-quick-scan-hostdetails.png 17-zenmap-ping-scan.png
+18-zenmap-topology.png
+
+Other evidence: Week2_Zenmap_Scan.xml Week2_Topology.pdf
+
+Only attach files that were actually saved. The screenshot names above
+are suggested names from the work session; verify that they exist.
+
+============================================================ COMPLETION
+STATUS AND LIMITATIONS
+============================================================
+
+PM1: - WHOIS: completed against networkwalks.com. - WhatWeb: completed
+against networkwalks.com. - Nslookup and Dig: completed against
+networkwalks.com. - cURL: local HTTP header demonstration; external
+target request not confirmed. - WAFW00F: version verified; actual WAF
+detection scan not performed. - DNSRecon: completed against local lab
+domain lab.test; not against networkwalks.com.
+
+PM5: - Zenmap quick scan of localhost: completed. - Local subnet Ping
+Scan: completed. - Three live hosts identified. - MAC address
+investigation completed; conflicting ARP response documented. - Topology
+exported to PDF. - Zenmap XML scan saved.
+
+Do not claim external DNSRecon enumeration or external
+cURL testing was completed. Do not claim vulnerabilities were found; no
+exploitation or vulnerability validation was performed.
+
+END OF WEEK 2 COMMANDS AND RESULTS
