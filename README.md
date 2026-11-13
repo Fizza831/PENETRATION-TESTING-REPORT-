@@ -176,7 +176,7 @@ Finally, these practical exercises reinforced the importance of conducting cyber
 Screenshots and supporting files collected during the practical activities are organized in the repository.
 
 ### WHOIS Lookup
-![WHOIS Output](02_Screenshots/02-whois-networkwalks.png)
+![WHOIS Output](02_Screenshots//02-whois-networkwalks.png..png)
 
 ### WhatWeb Fingerprinting
 ![WhatWeb Output](02_Screenshots/Screenshot11-whatweb-fingerprint.png)
@@ -191,10 +191,10 @@ Screenshots and supporting files collected during the practical activities are o
 ![WAFW00F Output](02_Screenshots/13-wafw00f-version.png)
 
 ### Zenmap Ping Scan
-![Zenmap Ping Scan](02_Screenshots/17-zenmap-ping-scan.png)
+![Zenmap Ping Scan](02_Screenshots/17-zenmap-ping-scan.png.png)
 
 ### Zenmap Network Topology
-![Zenmap Topology](03_Zenmap_Files/sstopology.png)
+![Zenmap Topology](02_Screenshots/sstopology.png)
 The evidence includes:
 
 **Footprinting & Reconnaissance — W2-PM1**
